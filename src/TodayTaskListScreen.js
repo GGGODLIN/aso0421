@@ -401,19 +401,19 @@ const TodayTaskListScreen = props => {
     };
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setLoading(true);
-      //alert('Screen was focused');
-      fetchData().then(() => setLoading(false));
-      return () => {
-        setLoading(true);
-        //alert('Screen was unfocused');
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-      };
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     setLoading(true);
+  //     //alert('Screen was focused');
+  //     fetchData().then(() => setLoading(false));
+  //     return () => {
+  //       setLoading(true);
+  //       //alert('Screen was unfocused');
+  //       // Do something when the screen is unfocused
+  //       // Useful for cleanup functions
+  //     };
+  //   }, []),
+  // );
 
   async function _onRefresh() {
     setisRefreshing(true);
@@ -424,7 +424,7 @@ const TodayTaskListScreen = props => {
   }
 
   useEffect(() => {
-    fetchData();
+    fetchData().then(() => setLoading(false));
     return () => {
       fetchData();
     };

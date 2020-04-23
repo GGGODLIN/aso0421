@@ -49,8 +49,9 @@ const InfoScreen = props => {
           backgroundColor: 'white',
           borderRadius: 10,
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row',margin: 10}}>
           <Avatar
+            containerStyle={{flex:1}}
             size={96}
             rounded
             source={{
@@ -58,16 +59,31 @@ const InfoScreen = props => {
                 'https://vignette.wikia.nocookie.net/meme/images/e/ee/Imbad_001.jpg/revision/latest/zoom-crop/width/240/height/240?cb=20200129070247&path-prefix=zh-tw',
             }}
           />
-          <View style={{flexDirection: 'column',paddingLeft:16,alignItems:'flex-start',justifyContent:'center'}}>
+          <View style={{flex:2,flexDirection: 'column',paddingLeft:16,alignItems:'flex-start',justifyContent:'center'}}>
             <Text>{props.route.params.mRealName}</Text>
             <Text>{props.route.params.mEmail}</Text>
             <Button
               title="變更密碼"
               type="clear"
               titleStyle={{fontSize: 12, color: '#964F19'}}
-              
+
               buttonStyle={{padding:0}}
             />
+          </View>
+        </View>
+        <View style={{borderWidth: 0.5,borderColor: '#DDDDDD'}}></View>
+        <View style={{margin: 10}}>
+          <View style={{flexDirection: 'row'}}>
+              <Text style={{flex:1}}>連絡電話</Text>
+              <Text style={{flex:2,paddingLeft: 16}}>{props.route.params.mTel}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+              <Text style={{flex:1}}>生日</Text>
+              <Text style={{flex:2,paddingLeft: 16}}>{props.route.params.mBirthDay}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+              <Text style={{flex:1}}>通訊地址</Text>
+              <Text style={{flex:2,paddingLeft: 16}}>{props.route.params.mTel}</Text>
           </View>
         </View>
       </View>

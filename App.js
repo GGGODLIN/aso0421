@@ -32,30 +32,103 @@ import {ActivityIndicator} from 'react-native-paper';
 import {Button, Avatar, Input, ThemeProvider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import { NavigationContainer } from '@react-navigation/native';
-
+import {NavigationContainer} from '@react-navigation/native';
 
 import InfoStack from './src/InfoStack';
 import LoginScreen from './src/LoginScreen';
 
 const App: () => React$Node = () => {
-
   const [login, setlogin] = useState(false);
+  const [profile, setprofile] = useState('1');
 
-  const handleLogin = () =>{
-    setlogin(true);
+
+  async function getToken() {
+    const data = await fetch(
+      'http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=0909000010&pass=19300101',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(res => {
+        console.log('TOKEN AJAX', res);
+        fetchData_test(res.token);
+      })
+      .catch(err => {
+        console.log(err);
+        Alert.alert('網路異常，請稍後再試...', ' ', [
+          {
+            text: '確定',
+            onPress: () => {},
+          },
+        ]);
+      });
   }
 
+  async function fetchData_test(input) {
+    let token = input;
+    const data = await fetch('http://aso.1966.org.tw:20020/api/Orders/Get', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.success){
+          console.log('TASK AJAX', res);
+        }else {
+          console.log('TASK AJAX GG', res);
+        }
+        
+      })
+      .catch(err => {
+        console.log("fetchData_test",err);
+        
+      });
+  }
 
-  
+  async function fetchLogin() {
+   
+    let url = 'http://aso.1966.org.tw:20020/api/Login/MasterLogin?acc=0909000010&pwd=19300101';
+    const data = await fetch(url, {
+      method: 'POST',
+      headers: {
+        
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.success){
+          console.log('LOGIN AJAX', res);
+          setprofile(res.response);
+        }else {
+          console.log('TASK AJAX GG', res);
+        }
+        
+      })
+      .catch(err => {
+        console.log("fetchData_test",err);
+        
+      });
+  }
+
+  const handleLogin = () => {
+    fetchLogin();
+    setlogin(true);
+  };
 
   return (
     <>
-    <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
-   
-        {login?<InfoStack />:<LoginScreen handleLogin={handleLogin}/>}
-   
+      <NavigationContainer>
+        <StatusBar barStyle="dark-content" />
+
+        {login ? <InfoStack profile={profile}/> : <LoginScreen handleLogin={handleLogin} />}
       </NavigationContainer>
     </>
   );

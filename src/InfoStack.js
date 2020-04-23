@@ -15,6 +15,7 @@ import {
 const Stack = createStackNavigator();
 
 export default function InfoStack(props) {
+
   return (
     <Stack.Navigator
       initialRouteName="TodayTaskListScreen"
@@ -23,6 +24,7 @@ export default function InfoStack(props) {
         headerStyle: {backgroundColor: '#F9F4F1'},
       }}>
       <Stack.Screen
+        initialParams={props.profile}
         name="InfoScreen"
         component={InfoScreen}
         options={{

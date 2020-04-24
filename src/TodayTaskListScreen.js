@@ -357,7 +357,7 @@ const TodayTaskListScreen = props => {
 
   async function fetchData_His(input) {
     let token = input;
-    let url = 'http://aso.1966.org.tw:20020/api/Orders/GetList?_date=';
+    let url = 'http://aso.1966.org.tw:20020/api/Orders/GetList?_date=&orderBy=%20ReservationDate%20desc%20';
     const data = await fetch(url, {
       method: 'GET',
       headers: {

@@ -34,7 +34,7 @@ import {
 } from 'react-native-elements';
 
 import {request, PERMISSIONS} from 'react-native-permissions';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect,useRoute} from '@react-navigation/native';
 import SegmentedControl from '@react-native-community/segmented-control';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -44,8 +44,8 @@ function Item({data, navigation}) {
   let nowDate = `${date.getFullYear()}-${
     date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
   }-${date.getDate()}`;
-  let startTime = data.ReservationDate;
-  let startDate = data.ReservationDate;
+  let startTime = data?.ReservationDate;
+  let startDate = data?.ReservationDate;
   let pos = startTime.indexOf('T');
   if (pos != -1) {
     startDate = startTime.substring(0, pos);
@@ -72,15 +72,15 @@ function Item({data, navigation}) {
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>{startTime}</Text>
         <Text
           style={{fontSize: 14, textAlign: 'right', flex: 1, color: '#E37F22'}}>
-          {data.Status === 0
+          {data?.Status === 0
             ? '新訂單'
-            : data.Status === 1
+            : data?.Status === 1
             ? '已排班'
-            : data.Status === 2
+            : data?.Status === 2
             ? '客戶未到'
-            : data.Status === 3
+            : data?.Status === 3
             ? '客戶取消'
-            : data.Status === 4
+            : data?.Status === 4
             ? '後台取消'
             : '已完成'}
         </Text>
@@ -88,11 +88,11 @@ function Item({data, navigation}) {
 
       <View style={{flexDirection: 'column', margin: 14}}>
         <Text style={{fontSize: 18, fontWeight: 'bold', marginRight: 18}}>
-          {data.ShopName}
+          {data?.ShopName}
         </Text>
-        <Text style={{fontSize: 14}}>{data.ShopAddr}</Text>
+        <Text style={{fontSize: 14}}>{data?.ShopAddr}</Text>
         <Text style={{fontSize: 14, flex: 1, color: '#964F19'}}>
-          {data.ShopTel}
+          {data?.ShopTel}
         </Text>
       </View>
 
@@ -108,12 +108,12 @@ function Item({data, navigation}) {
               marginRight: 18,
               lineHeight: 18,
             }}>
-            {data.CustomerName}
+            {data?.CustomerName}
           </Text>
           <Text style={{fontSize: 12, color: '#999999', lineHeight: 18}}>
             預約編號
           </Text>
-          <Text style={{fontSize: 12, lineHeight: 18}}>{data.OrderNo}</Text>
+          <Text style={{fontSize: 12, lineHeight: 18}}>{data?.OrderNo}</Text>
         </View>
         <View
           style={
@@ -169,7 +169,13 @@ function Item({data, navigation}) {
 }
 
 const TodayTaskListScreen = props => {
-  console.log('CHECK CAR?');
+  
+  let acc = props?.route?.params?.addAcc;
+  let pwd = props?.route?.params?.addPwd;
+  console.log('CHECK CAR?',acc,pwd);
+  
+
+
   const [data, setdata] = useState({});
   const [hisData, sethisData] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -187,8 +193,8 @@ const TodayTaskListScreen = props => {
 
   const onChange = (event, selectedDate) => {
     setShow(Platform.OS === 'ios');
-    if (event.type === 'set') {
-      console.log(event.type);
+    if (event?.type === 'set') {
+      console.log(event?.type);
       const currentDate = selectedDate || date;
 
       setDate(currentDate);
@@ -206,7 +212,7 @@ const TodayTaskListScreen = props => {
 
   const onChange2 = (event, selectedDate) => {
     setShow2(Platform.OS === 'ios');
-    if (event.type === 'set') {
+    if (event?.type === 'set') {
       const currentDate2 = selectedDate || date2;
 
       setDate2(currentDate2);
@@ -242,7 +248,7 @@ const TodayTaskListScreen = props => {
 
   async function searchData(sDate, eDate, key) {
     const data = await fetch(
-      'http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=0909000010&pass=19300101',
+      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -254,7 +260,7 @@ const TodayTaskListScreen = props => {
       .then(res => {
         console.log('TOKEN AJAX', res);
 
-        searchData_His(res.token, sDate, eDate, key);
+        searchData_His(res?.token, sDate, eDate, key);
       })
       .catch(err => {
         console.log(err);
@@ -280,7 +286,7 @@ const TodayTaskListScreen = props => {
     })
       .then(response => response.json())
       .then(res => {
-        if (res.success) {
+        if (res?.success) {
           console.log('TASK AJAX!!!!!!!!!', res);
           sethisData(res);
         } else {
@@ -294,7 +300,7 @@ const TodayTaskListScreen = props => {
 
   async function getToken() {
     const data = await fetch(
-      'http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=0909000010&pass=19300101',
+      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -304,11 +310,11 @@ const TodayTaskListScreen = props => {
     )
       .then(response => response.json())
       .then(res => {
-        console.log('TOKEN AJAX', res);
+        console.log('TOKEN AJAX TASK', res);
 
-        fetchData_test(res.token);
+        fetchData_test(res?.token);
 
-        fetchData_His(res.token);
+        fetchData_His(res?.token);
       })
       .catch(err => {
         console.log(err);
@@ -323,12 +329,11 @@ const TodayTaskListScreen = props => {
 
   async function fetchData_test(input) {
     let date = new Date();
-    let nowDate = `${date.getFullYear()}-${date.getMonth() + 1
-    }-${date.getDate()}`;
+    let nowDate = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`;
     let token = input;
-    let url =
-      `http://aso.1966.org.tw:20020/api/Orders/GetList?_date=${nowDate}&_eDate=${nowDate}`;
-      console.log("fetchData_test request to ",url);
+    let url = `http://aso.1966.org.tw:20020/api/Orders/GetList?_date=${nowDate}&_eDate=${nowDate}`;
+    console.log('fetchData_test request to ', url);
     const data = await fetch(url, {
       method: 'GET',
       headers: {
@@ -338,7 +343,7 @@ const TodayTaskListScreen = props => {
     })
       .then(response => response.json())
       .then(res => {
-        if (res.success) {
+        if (res?.success) {
           console.log('TASK AJAX!!!!!!!!!', res);
           setdata(res);
         } else {
@@ -362,7 +367,7 @@ const TodayTaskListScreen = props => {
     })
       .then(response => response.json())
       .then(res => {
-        if (res.success) {
+        if (res?.success) {
           console.log('TASK AJAX!!!!!!!!!', res);
           sethisData(res);
         } else {
@@ -434,7 +439,7 @@ const TodayTaskListScreen = props => {
     console.log('HAY!');
   }, [changeDate, changeDate2]);
 
-  if (isLoading || data.response === undefined) {
+  if (isLoading || data?.response === undefined) {
     console.log('TASKS screen is loading...');
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -442,7 +447,7 @@ const TodayTaskListScreen = props => {
       </View>
     );
   } else {
-    const list = selectedIndex === 0 ? data.response : hisData.response;
+    const list = selectedIndex === 0 ? data?.response : hisData?.response;
     let nowDate = `${date.getFullYear()}-${date.getMonth() +
       1}-${date.getDate()}`;
     let nowDate2 = `${date2.getFullYear()}-${date2.getMonth() +
@@ -462,7 +467,7 @@ const TodayTaskListScreen = props => {
           values={['本日任務', '任務歷程']}
           selectedIndex={selectedIndex}
           onChange={event => {
-            setselectedIndex(event.nativeEvent.selectedSegmentIndex);
+            setselectedIndex(event?.nativeEvent?.selectedSegmentIndex);
           }}
         />
         {/*<SegmentedControlTab
@@ -563,9 +568,9 @@ const TodayTaskListScreen = props => {
             style={{flex: 4, padding: 7, textAlign: 'center', color: '#AAAAAA'}}
             placeholder="您可以搜尋分店名、電話、顧客姓名"
             onEndEditing={e => {
-              setsearchKey(e.nativeEvent.text);
+              setsearchKey(e?.nativeEvent?.text);
               if (changeDate && changeDate2) {
-                searchData(nowDate, nowDate2, e.nativeEvent.text);
+                searchData(nowDate, nowDate2, e?.nativeEvent?.text);
               }
             }}
           />
@@ -581,19 +586,19 @@ const TodayTaskListScreen = props => {
                 title="Loading..."
                 size="large"
                 titleColor="#00ff00"
-                colors={['#ff0000', '#00ff00', '#0000ff']}
-                progressBackgroundColor="#ffff00"
+                colors={['#964F19', '#964F19', '#964F19']}
+                progressBackgroundColor="#fff"
               />
             )
           }
           renderItem={({item}) => (
-            <Item data={item} navigation={props.navigation} />
+            <Item data={item} navigation={props?.navigation} />
           )}
-          keyExtractor={item => item.OrderNo}
+          keyExtractor={item => item?.OrderNo}
         />
         <Text
           style={
-            list.length === 0
+            list?.length === 0
               ? {
                   flex: 20,
                   alignSelf: 'center',

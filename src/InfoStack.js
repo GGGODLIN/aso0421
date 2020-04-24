@@ -15,7 +15,8 @@ import {
 const Stack = createStackNavigator();
 
 export default function InfoStack(props) {
-
+  console.log("QQ",props?.profile);
+  let acc = props?.token;
   return (
     <Stack.Navigator
       initialRouteName="TodayTaskListScreen"
@@ -24,7 +25,7 @@ export default function InfoStack(props) {
         headerStyle: {backgroundColor: '#F9F4F1'},
       }}>
       <Stack.Screen
-        initialParams={props.profile}
+        initialParams={props?.profile}
         name="InfoScreen"
         component={InfoScreen}
         options={{
@@ -42,6 +43,7 @@ export default function InfoStack(props) {
         }}
       />
       <Stack.Screen
+        initialParams={props?.profile}
         name="TodayTaskListScreen"
         component={TodayTaskListScreen}
         options={({navigation}) => ({
@@ -53,7 +55,7 @@ export default function InfoStack(props) {
               name="account"
               type="material-community"
               color="#555555"
-              onPress={() => navigation.navigate('InfoScreen')}
+              onPress={() => navigation?.navigate('InfoScreen')}
             />
           ),
         })}

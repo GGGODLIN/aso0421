@@ -40,11 +40,14 @@ import LoginScreen from './src/LoginScreen';
 const App: () => React$Node = () => {
   const [login, setlogin] = useState(false);
   const [profile, setprofile] = useState('1');
+  const [acc, setacc] = useState('');
+  const [pwd, setpwd] = useState('');
+  const [token, settoken] = useState('');
 
 
-  async function getToken() {
+  async function getToken(acc,pwd) {
     const data = await fetch(
-      'http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=0909000010&pass=19300101',
+      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -54,8 +57,10 @@ const App: () => React$Node = () => {
     )
       .then(response => response.json())
       .then(res => {
-        console.log('TOKEN AJAX', res);
-        fetchData_test(res.token);
+        console.log('TOKEN AJAX APP', res?.token);
+        settoken(res?.token);
+        setlogin(true);
+        
       })
       .catch(err => {
         console.log(err);
@@ -79,10 +84,10 @@ const App: () => React$Node = () => {
     })
       .then(response => response.json())
       .then(res => {
-        if (res.success){
+        if (res?.success){
           console.log('TASK AJAX', res);
         }else {
-          console.log('TASK AJAX GG', res);
+          console.log('TASK AJAX GGWP', res);
         }
         
       })
@@ -92,9 +97,9 @@ const App: () => React$Node = () => {
       });
   }
 
-  async function fetchLogin() {
+  async function fetchLogin(acc,pwd) {
    
-    let url = 'http://aso.1966.org.tw:20020/api/Login/MasterLogin?acc=0909000010&pwd=19300101';
+    let url = `http://aso.1966.org.tw:20020/api/Login/MasterLogin?acc=${acc}&pwd=${pwd}`;
     const data = await fetch(url, {
       method: 'POST',
       headers: {
@@ -104,11 +109,23 @@ const App: () => React$Node = () => {
     })
       .then(response => response.json())
       .then(res => {
-        if (res.success){
+        if (res?.success){
           console.log('LOGIN AJAX', res);
-          setprofile(res.response);
+          res.response.addPwd = pwd;
+          res.response.addAcc = acc;
+          setprofile(res?.response);
+          setacc(acc);
+          setpwd(pwd);
+          getToken(acc,pwd);
+          
         }else {
-          console.log('TASK AJAX GG', res);
+          console.log('TASK AJAX GGWP', res);
+          Alert.alert(res?.msg, ' ', [
+            {
+              text: '確定',
+              onPress: () => {},
+            },
+          ]);
         }
         
       })
@@ -118,9 +135,9 @@ const App: () => React$Node = () => {
       });
   }
 
-  const handleLogin = () => {
-    fetchLogin();
-    setlogin(true);
+  const handleLogin = (acc,pwd) => {
+    console.log(acc,pwd);
+    fetchLogin(acc,pwd);
   };
 
   return (
@@ -128,7 +145,7 @@ const App: () => React$Node = () => {
       <NavigationContainer>
         <StatusBar barStyle="dark-content" />
 
-        {login ? <InfoStack profile={profile}/> : <LoginScreen handleLogin={handleLogin} />}
+        {login ? <InfoStack profile={profile} acc={acc} pwd={pwd} token={token}/> : <LoginScreen handleLogin={handleLogin} />}
       </NavigationContainer>
     </>
   );

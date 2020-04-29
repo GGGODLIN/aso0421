@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   TextInput,
+  Linking,
 } from 'react-native';
 
 import {
@@ -34,12 +35,12 @@ import {
 } from 'react-native-elements';
 
 import {request, PERMISSIONS} from 'react-native-permissions';
-import {useFocusEffect,useRoute} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import SegmentedControl from '@react-native-community/segmented-control';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-function Item({data, navigation}) {
+function Item({data, navigation, handleDone}) {
   let date = new Date();
   let nowDate = `${date.getFullYear()}-${
     date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
@@ -51,8 +52,19 @@ function Item({data, navigation}) {
     startDate = startTime.substring(0, pos);
     startTime = startTime.substring(pos + 1, pos + 6);
   }
-  let even = startDate == nowDate ? true : false;
+  let even = startDate == nowDate && data?.Status === 1 ? true : false;
+  let textColor =
+    data?.Status === 1 ? '#E37F22' : data?.Status === 5 ? '#26B49A' : '#D25959';
   console.log(nowDate, even, startDate);
+
+  const _handleDone = () => {
+    console.log('handel!', date);
+    let reData = data;
+    reData.ModifyTime = date;
+    reData.Status = 5;
+    reData.IsDeleted = false;
+    handleDone(reData);
+  };
 
   return (
     <View
@@ -71,17 +83,17 @@ function Item({data, navigation}) {
         </Text>
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>{startTime}</Text>
         <Text
-          style={{fontSize: 14, textAlign: 'right', flex: 1, color: '#E37F22'}}>
+          style={{fontSize: 14, textAlign: 'right', flex: 1, color: textColor}}>
           {data?.Status === 0
             ? '新訂單'
             : data?.Status === 1
-            ? '已排班'
+            ? '即將到來'
             : data?.Status === 2
             ? '客戶未到'
             : data?.Status === 3
-            ? '客戶取消'
+            ? '已由顧客取消'
             : data?.Status === 4
-            ? '後台取消'
+            ? '已由服務單位取消'
             : '已完成'}
         </Text>
       </View>
@@ -142,7 +154,9 @@ function Item({data, navigation}) {
               marginVertical: 5,
             }}
             type="outline"
-            onPress={() => {}}
+            onPress={() => {
+              Linking.openURL(`tel:${data?.ShopTel}`);
+            }}
           />
           <Button
             title="任務完成"
@@ -160,7 +174,9 @@ function Item({data, navigation}) {
               marginVertical: 5,
             }}
             type="solid"
-            onPress={() => {}}
+            onPress={() => {
+              _handleDone();
+            }}
           />
         </View>
       </View>
@@ -169,12 +185,9 @@ function Item({data, navigation}) {
 }
 
 const TodayTaskListScreen = props => {
-  
   let acc = props?.route?.params?.addAcc;
   let pwd = props?.route?.params?.addPwd;
-  console.log('CHECK CAR?',acc,pwd);
-  
-
+  console.log('CHECK CAR?', acc, pwd);
 
   const [data, setdata] = useState({});
   const [hisData, sethisData] = useState({});
@@ -182,6 +195,7 @@ const TodayTaskListScreen = props => {
   const [isRefreshing, setisRefreshing] = useState(false);
   const [selectedIndex, setselectedIndex] = useState(0);
 
+  const [list, setlist] = useState([]);
   const [date, setDate] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -345,7 +359,24 @@ const TodayTaskListScreen = props => {
       .then(res => {
         if (res?.success) {
           console.log('TASK AJAX!!!!!!!!!', res);
+
+          let list = res?.response;
+          let var_tempArr = new Array();
+
+          if (list.length >= 0) {
+            let filterIs5 = list.filter(function(item, index, array) {
+              return item.Status === 5; 
+            });
+            let filterNot5 = list.filter(function(item, index, array) {
+              return item.Status !== 5; 
+            });
+            list = filterNot5.concat(filterIs5);
+          }
+
+          console.log('RRRRRRRRRR', var_tempArr, list.length);
+          setlist(list);
           setdata(res);
+          setLoading(false);
         } else {
           console.log('TASK AJAX GG', res);
         }
@@ -357,7 +388,8 @@ const TodayTaskListScreen = props => {
 
   async function fetchData_His(input) {
     let token = input;
-    let url = 'http://aso.1966.org.tw:20020/api/Orders/GetList?_date=&orderBy=%20ReservationDate%20desc%20';
+    let url =
+      'http://aso.1966.org.tw:20020/api/Orders/GetList?_date=&orderBy=%20ReservationDate%20desc%20';
     const data = await fetch(url, {
       method: 'GET',
       headers: {
@@ -370,6 +402,7 @@ const TodayTaskListScreen = props => {
         if (res?.success) {
           console.log('TASK AJAX!!!!!!!!!', res);
           sethisData(res);
+          setLoading(false);
         } else {
           console.log('TASK AJAX GG', res);
         }
@@ -380,7 +413,62 @@ const TodayTaskListScreen = props => {
   }
 
   const fetchData = async () => {
-    getToken();
+    await getToken();
+  };
+
+  const handleDone = e => {
+    console.log(e);
+    ordersPut(e);
+  };
+
+  const ordersPut = async input => {
+    setLoading(true);
+    const data = await fetch(
+      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(async res => {
+        console.log('ordersPut TOKEN AJAX TASK', res);
+
+        let token = res?.token;
+        let url2 = 'http://aso.1966.org.tw:20020/api/Orders/Put';
+        console.log('ordersPut request to', url2);
+        const data2 = await fetch(url2, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(input),
+        })
+          .then(response2 => response2.json())
+          .then(res2 => {
+            if (res2?.success) {
+              console.log('ORDERS AJAX ORDERS', res2);
+              fetchData();
+            } else {
+              console.log('ORDERS AJAX GG', res2);
+            }
+          })
+          .catch(err2 => {
+            console.log('fetchData_test', err2);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+        Alert.alert('網路異常，請稍後再試...', ' ', [
+          {
+            text: '確定',
+            onPress: () => {},
+          },
+        ]);
+      });
   };
 
   useFocusEffect(() => {
@@ -423,7 +511,6 @@ const TodayTaskListScreen = props => {
   async function _onRefresh() {
     setisRefreshing(true);
     fetchData().then(() => {
-      setLoading(false);
       setisRefreshing(false);
     });
   }
@@ -447,7 +534,8 @@ const TodayTaskListScreen = props => {
       </View>
     );
   } else {
-    const list = selectedIndex === 0 ? data?.response : hisData?.response;
+    let dlist = selectedIndex === 0 ? list : hisData?.response;
+
     let nowDate = `${date.getFullYear()}-${date.getMonth() +
       1}-${date.getDate()}`;
     let nowDate2 = `${date2.getFullYear()}-${date2.getMonth() +
@@ -576,7 +664,7 @@ const TodayTaskListScreen = props => {
           />
         </View>
         <FlatList
-          data={list}
+          data={dlist}
           refreshControl={
             selectedIndex === 0 && (
               <RefreshControl
@@ -592,13 +680,17 @@ const TodayTaskListScreen = props => {
             )
           }
           renderItem={({item}) => (
-            <Item data={item} navigation={props?.navigation} />
+            <Item
+              data={item}
+              navigation={props?.navigation}
+              handleDone={handleDone}
+            />
           )}
           keyExtractor={item => item?.OrderNo}
         />
         <Text
           style={
-            list?.length === 0
+            dlist?.length === 0
               ? {
                   flex: 20,
                   alignSelf: 'center',

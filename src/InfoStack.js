@@ -15,7 +15,7 @@ import {
 const Stack = createStackNavigator();
 
 export default function InfoStack(props) {
-  console.log("QQ",props?.profile);
+  console.log("QQ",props?.handleLogout);
   let acc = props?.token;
   return (
     <Stack.Navigator

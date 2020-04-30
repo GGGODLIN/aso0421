@@ -113,6 +113,7 @@ const App: () => React$Node = () => {
           console.log('LOGIN AJAX', res);
           res.response.addPwd = pwd;
           res.response.addAcc = acc;
+          res.response.handleLogout = handleLogout;
           setprofile(res?.response);
           setacc(acc);
           setpwd(pwd);
@@ -140,12 +141,17 @@ const App: () => React$Node = () => {
     fetchLogin(acc,pwd);
   };
 
+  const handleLogout = () => {
+    
+    setlogin(false);
+  };
+
   return (
     <>
       <NavigationContainer>
         <StatusBar barStyle="dark-content" />
 
-        {login ? <InfoStack profile={profile} acc={acc} pwd={pwd} token={token}/> : <LoginScreen handleLogin={handleLogin} />}
+        {login ? <InfoStack profile={profile} acc={acc} pwd={pwd} token={token} handleLogout={handleLogout}/> : <LoginScreen handleLogin={handleLogin} />}
       </NavigationContainer>
     </>
   );

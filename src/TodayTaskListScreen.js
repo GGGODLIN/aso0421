@@ -32,6 +32,8 @@ import {
   Input,
   ThemeProvider,
   Icon,
+  Rating,
+  AirbnbRating,
 } from 'react-native-elements';
 
 import {request, PERMISSIONS} from 'react-native-permissions';
@@ -69,7 +71,7 @@ function Item({data, navigation, handleDone}) {
   return (
     <View
       style={{
-        marginTop: 20,
+        marginVertical: 10,
         paddingBottom: 0,
         width: '95%',
         alignSelf: 'center',
@@ -106,6 +108,16 @@ function Item({data, navigation, handleDone}) {
         <Text style={{fontSize: 14, flex: 1, color: '#964F19'}}>
           {data?.ShopTel}
         </Text>
+        <Rating
+          type="custom"
+          ratingColor="#FFC531"
+          imageSize={20}
+          readonly
+          startingValue={data?.AllService}
+          style={
+            data?.Status === 5 ? {alignSelf: 'flex-start'} : {display: 'none'}
+          }
+        />
       </View>
 
       <View style={{flexDirection: 'row', margin: 14}}>
@@ -365,10 +377,10 @@ const TodayTaskListScreen = props => {
 
           if (list.length >= 0) {
             let filterIs5 = list.filter(function(item, index, array) {
-              return item.Status === 5; 
+              return item.Status === 5;
             });
             let filterNot5 = list.filter(function(item, index, array) {
-              return item.Status !== 5; 
+              return item.Status !== 5;
             });
             list = filterNot5.concat(filterIs5);
           }
@@ -659,6 +671,9 @@ const TodayTaskListScreen = props => {
               setsearchKey(e?.nativeEvent?.text);
               if (changeDate && changeDate2) {
                 searchData(nowDate, nowDate2, e?.nativeEvent?.text);
+              }
+              else{
+                searchData('', '', e?.nativeEvent?.text);
               }
             }}
           />

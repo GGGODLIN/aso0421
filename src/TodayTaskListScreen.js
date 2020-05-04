@@ -46,7 +46,9 @@ function Item({data, navigation, handleDone}) {
   let date = new Date();
   let nowDate = `${date.getFullYear()}-${
     date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-  }-${date.getDate()}`;
+  }-${
+    date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+  }`;
   let startTime = data?.ReservationDate;
   let startDate = data?.ReservationDate;
   let pos = startTime.indexOf('T');

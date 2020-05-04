@@ -76,8 +76,8 @@ LoginScreen = props => {
           size={120}
        
           overlayContainerStyle={{backgroundColor:'#E5E5E5'}}
-          imageProps={{resizeMode:'center'}}
-          avatarStyle={{width:'85%'}}
+          
+          
           source={require('../img/a206015.png')}
         />
         <Text style={{fontSize: 32, marginTop: 24, marginBottom: 49}}>

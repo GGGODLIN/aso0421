@@ -5453,6 +5453,20 @@ react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
+react-native-modal-datetime-picker@^8.6.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-8.6.0.tgz#d3ce022b44926c5f08fc4fc29718ec8ef0111592"
+  integrity sha512-eotQuosAy/eKtmAr/XbsBwMJ9uvkrus8m9FGMvvlY1ExOEH+69fFAgHbXwu/42FQ78J0qA23nuGenWvPEf4XIQ==
+  dependencies:
+    prop-types "^15.7.2"
+
+react-native-modal-selector@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-modal-selector/-/react-native-modal-selector-2.0.1.tgz#ae75bbe23d5bff06165f18476eb1088ae3d361ba"
+  integrity sha512-biDUC51MnH3aIbCL4tGJjqN6MPd+H3iPy/EsoPwY5qcUjYn1owbCXs+RY80wOOYpu9OLi6RZQ+C87v2JQ8TxOA==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-paper@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-3.8.0.tgz#94d9b50b945ce91c90491cce34d1c27845503990"

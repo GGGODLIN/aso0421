@@ -14,6 +14,7 @@ import {
   RefreshControl,
   TextInput,
   Linking,
+  Platform,
 } from 'react-native';
 
 import {
@@ -41,12 +42,16 @@ import {useFocusEffect, useRoute} from '@react-navigation/native';
 import SegmentedControl from '@react-native-community/segmented-control';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 function Item({data, navigation, handleDone}) {
   let date = new Date();
   let nowDate = `${date.getFullYear()}-${
     date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-  }-${date.getDate()}`;
+  }-${
+    date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+  }`;
+  
   let startTime = data?.ReservationDate;
   let startDate = data?.ReservationDate;
   let pos = startTime.indexOf('T');
@@ -217,8 +222,48 @@ const TodayTaskListScreen = props => {
   const [changeDate2, setchangeDate2] = useState(false);
   const [searchKey, setsearchKey] = useState('');
 
+  const hideDatePicker = () => {
+    setShow(false);
+  };
+  const handleConfirm = selectedDate => {
+    //console.warn("A date has been picked: ", selectedDate);
+    const currentDate = selectedDate;
+
+    setDate(currentDate);
+    setchangeDate(true);
+    if (changeDate2) {
+      let nowDate = `${currentDate.getFullYear()}-${currentDate.getMonth() +
+        1}-${currentDate.getDate()}`;
+      let nowDate2 = `${date2.getFullYear()}-${date2.getMonth() +
+        1}-${date2.getDate()}`;
+
+      searchData(nowDate, nowDate2, searchKey);
+    }
+    hideDatePicker();
+  };
+
+  const hideDatePicker2 = () => {
+    setShow2(false);
+  };
+  const handleConfirm2 = selectedDate => {
+    //console.warn("A date has been picked: ", selectedDate);
+    const currentDate2 = selectedDate;
+
+    setDate2(currentDate2);
+    setchangeDate2(true);
+    if (changeDate) {
+      let nowDate = `${date.getFullYear()}-${date.getMonth() +
+        1}-${date.getDate()}`;
+      let nowDate2 = `${currentDate2.getFullYear()}-${currentDate2.getMonth() +
+        1}-${currentDate2.getDate()}`;
+
+      searchData(nowDate, nowDate2, searchKey);
+    }
+    hideDatePicker2();
+  };
+
   const onChange = (event, selectedDate) => {
-    setShow(Platform.OS === 'ios');
+    setShow(false);
     if (event?.type === 'set') {
       console.log(event?.type);
       const currentDate = selectedDate || date;
@@ -237,7 +282,7 @@ const TodayTaskListScreen = props => {
   };
 
   const onChange2 = (event, selectedDate) => {
-    setShow2(Platform.OS === 'ios');
+    setShow2(false);
     if (event?.type === 'set') {
       const currentDate2 = selectedDate || date2;
 
@@ -621,25 +666,27 @@ const TodayTaskListScreen = props => {
         </View>
 
         {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
+          <View>
+            <DateTimePickerModal
+              isVisible={show}
+              cancelTextIOS="取消"
+              confirmTextIOS="確認"
+              headerTextIOS='請選擇開始日期'
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
+          </View>
         )}
         {show2 && (
-          <DateTimePicker
-            testID="dateTimePicker2"
-            timeZoneOffsetInMinutes={0}
-            value={date2}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange2}
+          <DateTimePickerModal
+            isVisible={show2}
+            cancelTextIOS="取消"
+            confirmTextIOS="確認"
+            headerTextIOS='請選擇結束日期'
+            mode="date"
+            onConfirm={handleConfirm2}
+            onCancel={hideDatePicker2}
           />
         )}
 
@@ -671,8 +718,7 @@ const TodayTaskListScreen = props => {
               setsearchKey(e?.nativeEvent?.text);
               if (changeDate && changeDate2) {
                 searchData(nowDate, nowDate2, e?.nativeEvent?.text);
-              }
-              else{
+              } else {
                 searchData('', '', e?.nativeEvent?.text);
               }
             }}

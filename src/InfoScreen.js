@@ -33,6 +33,7 @@ import {Picker} from '@react-native-community/picker';
 
 import {request, PERMISSIONS} from 'react-native-permissions';
 import {City_counties, Counties} from './cities';
+import ModalSelector from 'react-native-modal-selector';
 
 const InfoScreen = props => {
   //console.log('CHECK INFO?', props?.route?.params);
@@ -44,8 +45,8 @@ const InfoScreen = props => {
   const [overlay2, setoverlay2] = useState(false);
   const [overlay3, setoverlay3] = useState(false);
   const [overlay4, setoverlay4] = useState(false);
-  const [addr, setaddr] = useState('高譚市');
-  const [addr2, setaddr2] = useState('二十一區');
+  const [addr, setaddr] = useState('請選擇縣市');
+  const [addr2, setaddr2] = useState('請選擇鄉鎮市區');
   const [addr3, setaddr3] = useState('');
   const [counties2, setcounties2] = useState([]);
   const [email, setemail] = useState('');
@@ -56,7 +57,10 @@ const InfoScreen = props => {
   testStr = testStr?.split(',');
   //console.log('TEST', testStr);
   let counties = Object.keys(City_counties);
-  //console.log('TEST2', counties);
+  let obj_value = counties?.map((val, index) => {
+    return {key: index, label: val};
+  });
+  //console.log('TEST2', obj_value);
   //console.log('TEST3', counties2);
 
   let startTime = profile?.mBirthDay;
@@ -321,32 +325,58 @@ const InfoScreen = props => {
             {`修改地址`}
           </Text>
 
-          <Picker
+          {/*<Picker
             enabled={true}
             selectedValue={addr}
             onValueChange={(itemValue, itemIndex) => {
               setaddr(itemValue);
               setcounties2(City_counties?.[itemValue]);
             }}>
-            <Picker.Item label="請選擇縣市" value={'高譚市'} />
+            <Picker.Item label="請選擇縣市" value={'請選擇縣市'} />
             {counties?.map((val, index) => {
               return <Picker.Item label={val} value={val} />;
             })}
-          </Picker>
+          </Picker>*/}
+          <ModalSelector
+            data={obj_value}
+            initValue={addr}
+            initValueTextStyle={{color:'black'}}
+            onChange={option => {
+              setaddr(option?.label);
+              setaddr2('請選擇鄉鎮市區');
+              let obj_value2 = City_counties?.[option?.label]?.map(
+                (val, index) => {
+                  return {key: index, label: val};
+                },
+              );
+              setcounties2(obj_value2);
+            }}
+          />
 
-          <Picker
+          {/*<Picker
             enabled={true}
-            style={addr === '高譚市' && {display: 'none'}}
+            style={addr === '請選擇縣市' && {display: 'none'}}
             selectedValue={addr2}
             onValueChange={(itemValue, itemIndex) => setaddr2(itemValue)}>
-            <Picker.Item label="請選擇鄉鎮市區" value={'二十一區'} />
+            <Picker.Item label="請選擇鄉鎮市區" value={'請選擇鄉鎮市區'} />
             {counties2?.map((val, index) => {
-              return <Picker.Item label={val} value={val} />;
+              return <Picker.Item label={val?.label} value={val?.label} />;
             })}
-          </Picker>
+          </Picker>*/}
+
+          <ModalSelector
+          disabled={addr === '請選擇縣市'}
+          initValueTextStyle={{color:'black'}}
+            data={counties2}
+            initValue={addr2}
+            onChange={option => {
+              setaddr2(option?.label);
+              
+            }}
+          />
 
           <Input
-            containerStyle={addr2 === '二十一區' && {display: 'none'}}
+            containerStyle={addr2 === '請選擇鄉鎮市區' && {display: 'none'}}
             inputStyle={{fontSize: 12}}
             placeholder="請由道路開始填寫，例：延平路27號3樓"
             onEndEditing={e => {
@@ -355,6 +385,7 @@ const InfoScreen = props => {
           />
 
           <Button
+          disabled = {addr==='請選擇縣市' || addr2 === '請選擇鄉鎮市區'}
             titleStyle={{
               color: 'black',
               fontWeight: 'normal',
@@ -367,7 +398,9 @@ const InfoScreen = props => {
             }}
             title="確認送出"
             type="outline"
-            onPress={() => submitAddr()}
+            onPress={() => {
+              submitAddr();
+            }}
           />
         </Overlay>
 

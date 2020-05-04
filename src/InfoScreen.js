@@ -511,10 +511,7 @@ const InfoScreen = props => {
             containerStyle={{flex: 1}}
             size={96}
             rounded
-            source={{
-              uri:
-                'https://vignette.wikia.nocookie.net/meme/images/e/ee/Imbad_001.jpg/revision/latest/zoom-crop/width/240/height/240?cb=20200129070247&path-prefix=zh-tw',
-            }}
+            source={require('../img/male2.png')}
           />
           <View
             style={{

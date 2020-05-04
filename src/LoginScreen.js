@@ -23,8 +23,9 @@ import DeviceInfo from 'react-native-device-info';
 import {ActivityIndicator} from 'react-native-paper';
 import {Button, Avatar, Input, ThemeProvider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import codePush from 'react-native-code-push';
 
-const LoginScreen = props => {
+LoginScreen = props => {
   console.log('Login');
   const [data, setdata] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -72,12 +73,12 @@ const LoginScreen = props => {
           justifyContent: 'center',
         }}>
         <Avatar
-          size={96}
-          rounded
-          source={{
-            uri:
-              'https://vignette.wikia.nocookie.net/meme/images/e/ee/Imbad_001.jpg/revision/latest/zoom-crop/width/240/height/240?cb=20200129070247&path-prefix=zh-tw',
-          }}
+          size={120}
+       
+          overlayContainerStyle={{backgroundColor:'#E5E5E5'}}
+          imageProps={{resizeMode:'center'}}
+          avatarStyle={{width:'85%'}}
+          source={require('../img/a206015.png')}
         />
         <Text style={{fontSize: 32, marginTop: 24, marginBottom: 49}}>
           足健師登入
@@ -116,6 +117,17 @@ const LoginScreen = props => {
     </SafeAreaView>
   );
 };
+
+LoginScreen = codePush({
+  updateDialog: {
+    title: 'APP有新版本，是否更新?',
+    descriptionPrefix: '版本號',
+    optionalUpdateMessage: ' ',
+    optionalIgnoreButtonLabel: '下次再說',
+    optionalInstallButtonLabel: '立即安裝並重啟',
+  },
+  installMode: codePush.InstallMode.IMMEDIATE,
+})(LoginScreen);
 
 export default LoginScreen;
 

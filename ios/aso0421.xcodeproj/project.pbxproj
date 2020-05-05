@@ -45,7 +45,7 @@
 		00E356EE1AD99517003FC87E /* aso0421Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aso0421Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* aso0421Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = aso0421Tests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* aso0421.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aso0421.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* ASO足健師.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ASO足健師.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = aso0421/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = aso0421/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* aso0421.app */,
+				13B07F961A680F5B00A75B9A /* ASO足健師.app */,
 				00E356EE1AD99517003FC87E /* aso0421Tests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* aso0421-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* aso0421-tvOSTests.xctest */,
@@ -241,7 +241,7 @@
 			);
 			name = aso0421;
 			productName = aso0421;
-			productReference = 13B07F961A680F5B00A75B9A /* aso0421.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* ASO足健師.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* aso0421-tvOS */ = {
@@ -701,7 +701,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aso0421.app/aso0421";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASO足健師.app/ASO足健師";
 			};
 			name = Debug;
 		};
@@ -721,7 +721,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aso0421.app/aso0421";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASO足健師.app/ASO足健師";
 			};
 			name = Release;
 		};
@@ -740,13 +740,14 @@
 				);
 				INFOPLIST_FILE = aso0421/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = aso0421;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.aso0421;
+				PRODUCT_NAME = "ASO足健師";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -763,13 +764,14 @@
 				DEVELOPMENT_TEAM = V5ZUWPFB7D;
 				INFOPLIST_FILE = aso0421/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = aso0421;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.aso0421;
+				PRODUCT_NAME = "ASO足健師";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

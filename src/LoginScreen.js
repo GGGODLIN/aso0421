@@ -9,7 +9,6 @@ import {
   DeviceEventEmitter,
   Alert,
   BackHandler,
-  KeyboardAvoidingView,
 } from 'react-native';
 
 import {
@@ -63,15 +62,7 @@ LoginScreen = props => {
   }, []);
 
   return (
-
-    <ScrollView style={{backgroundColor: '#E5E5E5',flex: 1,}}
-    keyboardShouldPersistTaps="handled"
-    contentContainerStyle={{flexGrow: 1}}>
-    <KeyboardAvoidingView
-
-        behavior={'height'}
-        enabled
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 10}>
+    <SafeAreaView style={{backgroundColor: '#E5E5E5'}}>
       <View
         style={{
           backgroundColor: '#E5E5E5',
@@ -83,10 +74,10 @@ LoginScreen = props => {
         }}>
         <Avatar
           size={120}
-
+       
           overlayContainerStyle={{backgroundColor:'#E5E5E5'}}
-
           imageProps={{resizeMode:'center'}}
+          avatarStyle={{width:'85%'}}
           source={require('../img/a206015.png')}
         />
         <Text style={{fontSize: 32, marginTop: 24, marginBottom: 49}}>
@@ -123,9 +114,7 @@ LoginScreen = props => {
           }}
         />
       </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
-
+    </SafeAreaView>
   );
 };
 

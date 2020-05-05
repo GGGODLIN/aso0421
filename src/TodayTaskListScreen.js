@@ -346,7 +346,8 @@ const TodayTaskListScreen = props => {
 
   async function searchData_His(input, sDate, eDate, key) {
     let token = input;
-    let url = `http://aso.1966.org.tw:20020/api/Orders/GetList?_date=${sDate}&_eDate=${eDate}&key=${key}&orderBy=%20ReservationDate%20desc%20`;
+    let url = `http://aso.1966.org.tw:20020/api/Orders/GetList?_date=${sDate}&_eDate=${eDate}&key=${key}&orderBy= ReservationDate desc `;
+    //url =  encodeURI(url);
     console.log('searchData_His request to', url);
     const data = await fetch(url, {
       method: 'GET',
@@ -358,10 +359,10 @@ const TodayTaskListScreen = props => {
       .then(response => response.json())
       .then(res => {
         if (res?.success) {
-          console.log('TASK AJAX!!!!!!!!!', res);
+          console.log('searchData_His AJAX!!!!!!!!!', res);
           sethisData(res);
         } else {
-          console.log('TASK AJAX GG', res);
+          console.log('searchData_His AJAX GG', res);
         }
       })
       .catch(err => {
@@ -447,6 +448,7 @@ const TodayTaskListScreen = props => {
     let token = input;
     let url =
       'http://aso.1966.org.tw:20020/api/Orders/GetList?_date=&orderBy=%20ReservationDate%20desc%20';
+      console.log('fetchData_His request to', url);
     const data = await fetch(url, {
       method: 'GET',
       headers: {

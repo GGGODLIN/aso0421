@@ -392,7 +392,7 @@ const InfoScreen = props => {
           </Text>
 
           <Input
-            inputStyle={{fontSize: 12}}
+            inputStyle={{fontSize: 14}}
             placeholder="請輸入新Email地址"
             onEndEditing={e => {
               setemail(e?.nativeEvent?.text);
@@ -437,7 +437,7 @@ const InfoScreen = props => {
           </Text>
 
           <Input
-            inputStyle={{fontSize: 12}}
+            inputStyle={{fontSize: 14}}
             placeholder="請輸入新電話"
             onEndEditing={e => {
               settel(e?.nativeEvent?.text);
@@ -482,7 +482,7 @@ const InfoScreen = props => {
           </Text>
 
           <Input
-            inputStyle={{fontSize: 12}}
+            inputStyle={{fontSize: 14}}
             placeholder="請輸入新密碼"
             onEndEditing={e => {
               setpwd(e?.nativeEvent?.text);
@@ -566,7 +566,7 @@ const InfoScreen = props => {
                     name="pencil"
                     type="material-community"
                     color="#666666"
-                    onPress={() => console.log('hello')}
+                    onPress={() => setoverlay2(true)}
                   />
                 }
                 iconRight
@@ -611,7 +611,7 @@ const InfoScreen = props => {
                   name="pencil"
                   type="material-community"
                   color="#666666"
-                  onPress={() => console.log('hello')}
+                  onPress={() => setoverlay3(true)}
                 />
               }
               iconRight
@@ -670,7 +670,7 @@ const InfoScreen = props => {
                   name="pencil"
                   type="material-community"
                   color="#666666"
-                  onPress={() => console.log('hello')}
+                  onPress={() => setoverlay(true)}
                 />
               }
               iconRight
@@ -709,7 +709,15 @@ const InfoScreen = props => {
             }}
             type="outline"
             onPress={() => {
-              handleLogout();
+              Alert.alert('確定登出?', ' ', [
+        {
+          text: '取消',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: '確定', onPress: () =>  handleLogout()},
+      ]);
+              
             }}
           />
         </View>

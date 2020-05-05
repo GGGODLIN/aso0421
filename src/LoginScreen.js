@@ -86,7 +86,7 @@ LoginScreen = props => {
        
           overlayContainerStyle={{backgroundColor:'#E5E5E5'}}
           
-          imageProps={{resizeMode:'center'}}
+          imageProps={{resizeMode:'contain'}}
           source={require('../img/a206015.png')}
         />
         <Text style={{fontSize: 32, marginTop: 24, marginBottom: 49}}>
@@ -99,12 +99,18 @@ LoginScreen = props => {
           onEndEditing={e => {
             setacc(e?.nativeEvent?.text);
           }}
+          onChange={e => {
+            setacc(e?.nativeEvent?.text);
+          }}
         />
         <Input
           label="登入密碼"
           placeholder="預設為您的西元出生年月，例 19840318"
           inputStyle={{fontSize: 14}}
           onEndEditing={e => {
+            setpwd(e?.nativeEvent?.text);
+          }}
+          onChange={e => {
             setpwd(e?.nativeEvent?.text);
           }}
         />
@@ -135,7 +141,7 @@ LoginScreen = codePush({
     descriptionPrefix: '版本號',
     optionalUpdateMessage: ' ',
     optionalIgnoreButtonLabel: '下次再說',
-    optionalInstallButtonLabel: '立即安裝並重啟',
+    optionalInstallButtonLabel: '立即安裝並重啟!',
   },
   installMode: codePush.InstallMode.IMMEDIATE,
 })(LoginScreen);

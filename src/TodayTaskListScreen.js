@@ -192,7 +192,15 @@ function Item({data, navigation, handleDone}) {
             }}
             type="solid"
             onPress={() => {
-              _handleDone();
+              Alert.alert('確定完成?', ' ', [
+        {
+          text: '取消',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: '確定', onPress: () =>  _handleDone()},
+      ]);
+             
             }}
           />
         </View>
@@ -553,19 +561,19 @@ const TodayTaskListScreen = props => {
     };
   }, []);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     setLoading(true);
-  //     //alert('Screen was focused');
-  //     fetchData().then(() => setLoading(false));
-  //     return () => {
-  //       setLoading(true);
-  //       //alert('Screen was unfocused');
-  //       // Do something when the screen is unfocused
-  //       // Useful for cleanup functions
-  //     };
-  //   }, []),
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      //alert('Screen was focused');
+      fetchData().then(() => setLoading(false));
+      return () => {
+        setLoading(true);
+        //alert('Screen was unfocused');
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, []),
+  );
 
   async function _onRefresh() {
     setisRefreshing(true);

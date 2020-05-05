@@ -139,9 +139,11 @@ LoginScreen = codePush({
   updateDialog: {
     title: 'APP有新版本，是否更新?',
     descriptionPrefix: '版本號',
+    mandatoryUpdateMessage:' ',
     optionalUpdateMessage: ' ',
     optionalIgnoreButtonLabel: '下次再說',
-    optionalInstallButtonLabel: '立即安裝並重啟!',
+    optionalInstallButtonLabel: '立即安裝並重啟',
+    mandatoryContinueButtonLabel:'立即安裝並重啟!',
   },
   installMode: codePush.InstallMode.IMMEDIATE,
 })(LoginScreen);

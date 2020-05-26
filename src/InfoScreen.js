@@ -54,7 +54,34 @@ const InfoScreen = props => {
 
   let testStr = profile?.ServiceArea;
   testStr = testStr?.split(',');
-  //console.log('TEST', testStr);
+
+  let MondayServiceArr = profile?.MondayService;
+  MondayServiceArr = MondayServiceArr?.split(',');
+  let MondayServiceText = (MondayServiceArr.length>1)?`${MondayServiceArr[0]}:00~${MondayServiceArr[MondayServiceArr.length-1]}:00`:'無';
+  let TuesdayServiceArr = profile?.TuesdayService;
+  TuesdayServiceArr = TuesdayServiceArr?.split(',');
+  let TuesdayServiceText = (TuesdayServiceArr.length>1)?`${TuesdayServiceArr[0]}:00~${TuesdayServiceArr[TuesdayServiceArr.length-1]}:00`:'無';
+  let WednesdayServiceArr = profile?.WednesdayService;
+  WednesdayServiceArr = WednesdayServiceArr?.split(',');
+  let WednesdayServiceText = (WednesdayServiceArr.length>1)?`${WednesdayServiceArr[0]}:00~${WednesdayServiceArr[WednesdayServiceArr.length-1]}:00`:'無';
+  let ThursdayServiceArr = profile?.ThursdayService;
+  ThursdayServiceArr = ThursdayServiceArr?.split(',');
+  let ThursdayServiceText = (ThursdayServiceArr.length>1)?`${ThursdayServiceArr[0]}:00~${ThursdayServiceArr[ThursdayServiceArr.length-1]}:00`:'無';
+  let FridayServiceArr = profile?.FridayService;
+  FridayServiceArr = FridayServiceArr?.split(',');
+  let FridayServiceText = (FridayServiceArr.length>1)?`${FridayServiceArr[0]}:00~${FridayServiceArr[FridayServiceArr.length-1]}:00`:'無';
+  let SaturdayServiceArr = profile?.SaturdayService;
+  SaturdayServiceArr = SaturdayServiceArr?.split(',');
+  let SaturdayServiceText = (SaturdayServiceArr.length>1)?`${SaturdayServiceArr[0]}:00~${SaturdayServiceArr[SaturdayServiceArr.length-1]}:00`:'無';
+  let SundayServiceArr = profile?.SundayService;
+  SundayServiceArr = SundayServiceArr?.split(',');
+  let SundayServiceText = (SundayServiceArr.length>1)?`${SundayServiceArr[0]}:00~${SundayServiceArr[SundayServiceArr.length-1]}:00`:'無';
+  
+
+  console.log('TEST', MondayServiceArr,TuesdayServiceArr,WednesdayServiceArr,ThursdayServiceArr
+    ,FridayServiceArr,SaturdayServiceArr,SundayServiceArr);
+  console.log('TEST TEXT', MondayServiceText,TuesdayServiceText,WednesdayServiceText,ThursdayServiceText
+    ,FridayServiceText,SaturdayServiceText,SundayServiceText);
   let counties = Object.keys(City_counties);
   //console.log('TEST2', counties);
   //console.log('TEST3', counties2);
@@ -688,6 +715,15 @@ const InfoScreen = props => {
                 <Text style={{width: '50%', textAlign: 'center'}}>{val}</Text>
               );
             })}
+          </View>
+        </View>
+        <View style={{borderWidth: 0.5, borderColor: '#DDDDDD'}} />
+        <View style={{margin: 10}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{flex: 1, color: '#999999'}}>服務時間</Text>
+          </View>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Text>週一</Text>
           </View>
         </View>
         <View style={{borderWidth: 0.5, borderColor: '#DDDDDD'}} />

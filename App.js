@@ -33,6 +33,7 @@ import {Button, Avatar, Input, ThemeProvider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import {NavigationContainer} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import InfoStack from './src/InfoStack';
 import LoginScreen from './src/LoginScreen';
@@ -136,14 +137,33 @@ const App: () => React$Node = () => {
       });
   }
 
-  const handleLogin = (acc,pwd) => {
-    console.log(acc,pwd);
+  const handleLogin = async (acc,pwd) => {
+    try {
+      
+      await AsyncStorage.setItem('ascAcc', acc);
+      await AsyncStorage.setItem('ascPwd', pwd);
+      
+      console.log(acc,pwd);
     fetchLogin(acc,pwd);
+     
+    } catch (error) {
+      console.log('LOCALSTORAGE WRONG',error);
+      // Error saving data
+    }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+     
+      await AsyncStorage.removeItem('ascAcc');
+      await AsyncStorage.removeItem('ascPwd');
+      setlogin(false);
+    } catch (error) {
+      console.log('cannot get ITEM BEFORE LOGGING');
+      // Error retrieving data
+    }
     
-    setlogin(false);
+    
   };
 
   return (

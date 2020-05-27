@@ -25,6 +25,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import {Button, Avatar, Input, ThemeProvider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import codePush from 'react-native-code-push';
+import AsyncStorage from '@react-native-community/async-storage';
 
 LoginScreen = props => {
   console.log('Login');
@@ -33,13 +34,32 @@ LoginScreen = props => {
   const [acc, setacc] = useState('');
   const [pwd, setpwd] = useState('');
 
-  async function fetchData() {}
+  const autoLogin = async () => {
+    try {
+      //const value = await AsyncStorage.getItem('userLoginInfo');
+      const ascAcc = await AsyncStorage.getItem('ascAcc');
+      const ascPwd = await AsyncStorage.getItem('ascPwd');
+     
+        
+        if (ascAcc!==null && ascPwd!==null){
+          //this.props.handleLogin(obj_value);
+          props.handleLogin(ascAcc,ascPwd);
+        }
+       else {
+        console.log('NOTHING HEHEXD');
+      }
+    } catch (error) {
+      console.log('cannot get ITEM BEFORE LOGGING');
+      // Error retrieving data
+    }
+  };
 
   const handleLogin = () => {
     props.handleLogin(acc,pwd);
   };
 
   useEffect(() => {
+    autoLogin();
     const backAction = () => {
       Alert.alert('確定要離開APP?', ' ', [
         {

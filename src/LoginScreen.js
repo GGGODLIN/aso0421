@@ -114,7 +114,7 @@ LoginScreen = props => {
         </Text>
         <Input
           label="登入帳號"
-          placeholder="請輸入您的使用者帳號"
+          placeholder="請輸入您的工號"
           containerStyle={{marginBottom: 20}}
           onEndEditing={e => {
             setacc(e?.nativeEvent?.text);
@@ -125,7 +125,7 @@ LoginScreen = props => {
         />
         <Input
           label="登入密碼"
-          placeholder="預設為您的西元出生年月，例 19840318"
+          placeholder="預設為您的西元出生年月日"
           inputStyle={{fontSize: 14}}
           onEndEditing={e => {
             setpwd(e?.nativeEvent?.text);

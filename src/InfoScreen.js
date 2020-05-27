@@ -139,21 +139,24 @@ const InfoScreen = props => {
   );
 
   let rows = [];
-  rows.push(<Picker.Item label={`無服務時間`} value={0} />);
+  
+  rows.push({key: `無服務時間`, label: `無服務時間`,cKey:0});
   for (let i = 10; i < 23; i++) {
-    rows.push(<Picker.Item label={`${i}:00`} value={i} />);
+    rows.push({key: `${i}:00`, label: `${i}:00`,cKey: i});
   }
   let rows2 = [];
-  rows2.push(<Picker.Item label={`無服務時間`} value={0} />);
+  rows2.push({key: `無服務時間`, label: `無服務時間`,cKey:0});
   for (let i = startHour + 1; i < 24; i++) {
-    rows2.push(<Picker.Item label={`${i}:00`} value={i} />);
+    rows2.push({key: `${i}:00`, label: `${i}:00`,cKey: i});
   }
   console.log(startHour, endHour);
+
 
   let counties = Object.keys(City_counties);
   let obj_value = counties?.map((val, index) => {
     return {key: index, label: val};
   });
+  console.log(rows,rows2,typeof rows,typeof obj_value,obj_value);
   //console.log('TEST2', obj_value);
   //console.log('TEST3', counties2);
 
@@ -604,22 +607,28 @@ const InfoScreen = props => {
             <Picker.Item label="星期日" value={7} />
           </Picker>
 
-          <Picker
-            enabled={true}
-            style={endHour === 0 && {display: 'none'}}
-            selectedValue={startHour}
-            onValueChange={(itemValue, itemIndex) => setstartHour(itemValue)}>
-            {rows}
-          </Picker>
-          {(endHour !== 0 && startHour !== 0) &&<Text style={{alignSelf: 'center'}}>至</Text>}
-          <Picker
-            enabled={true}
-            style={startHour === 0 && {display: 'none'}}
-            selectedValue={endHour}
-            onValueChange={(itemValue2, itemIndex2) => setendHour(itemValue2)}>
-            {rows2}
-          </Picker>
-
+          <ModalSelector
+            data={rows}
+            style={endHour===0&&{display:'none'}}
+            initValue={`${startHour}:00`}
+            initValueTextStyle={{color:'black'}}
+            labelExtractor= {item => item.label}
+            onChange={option => {
+              setstartHour(option?.cKey)
+            }}
+          />
+          <Text style={(endHour===0||startHour===0)?{display:'none'}:{alignSelf:'center'}}>至</Text>
+          
+          <ModalSelector
+            data={rows2}
+            style={startHour===0&&{display:'none'}}
+            initValue={`${endHour}:00`}
+            initValueTextStyle={{color:'black'}}
+            labelExtractor= {item => item.label}
+            onChange={option => {
+              setendHour(option?.cKey)
+            }}
+          />
           <Button
             titleStyle={{
               color: 'black',

@@ -29,7 +29,12 @@ export default function InfoStack(props) {
         name="InfoScreen"
         component={InfoScreen}
         options={{
-          title: 'A.S.O 足健師任務管理',
+          headerTitle:()=>(
+            <Image
+          style={{width:'80%', height:'80%',paddingStart:'80%',marginLeft:'5%'}}
+          source={require('../img/driver_logo.png')}
+        />
+          ),
           headerTitleAlign: 'center',
           headerRight: () => (
             <Icon
@@ -47,7 +52,12 @@ export default function InfoStack(props) {
         name="TodayTaskListScreen"
         component={TodayTaskListScreen}
         options={({navigation}) => ({
-          title: 'A.S.O 足健師任務管理',
+          headerTitle:()=>(
+            <Image
+          style={{width:'80%', height:'80%',paddingStart:'80%',marginLeft:'5%'}}
+          source={require('../img/driver_logo.png')}
+        />
+          ),
           headerTitleAlign: 'center',
           headerRight: () => (
             <Icon

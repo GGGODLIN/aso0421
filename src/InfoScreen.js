@@ -165,7 +165,7 @@ const InfoScreen = props => {
   async function fetchData() {}
 
   async function fetchLogin(acc, pwd) {
-    let url = `http://aso.1966.org.tw:20020/api/Login/MasterLogin?acc=${
+    let url = `http://deliver.vielife.com.tw:20027/api/Login/MasterLogin?acc=${
       props?.route?.params?.addAcc
     }&pwd=${props?.route?.params?.addPwd}`;
     const data = await fetch(url, {
@@ -197,7 +197,7 @@ const InfoScreen = props => {
 
   async function getToken() {
     const data = await fetch(
-      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${
+      `http://deliver.vielife.com.tw:20027/api/Login/JWTTokenMaster?name=${
         props?.route?.params?.addAcc
       }&pass=${props?.route?.params?.addPwd}`,
       {
@@ -233,7 +233,7 @@ const InfoScreen = props => {
     temp.CommDistrict = addr2;
     temp.CommAddr = addr3;
 
-    let url = `http://aso.1966.org.tw:20020/api/FootMaster/Put`;
+    let url = `http://deliver.vielife.com.tw:20027/api/FootMaster/Put`;
     const data = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -270,7 +270,7 @@ const InfoScreen = props => {
     let temp = profile;
     temp.mEmail = email;
 
-    let url = `http://aso.1966.org.tw:20020/api/FootMaster/Put`;
+    let url = `http://deliver.vielife.com.tw:20027/api/FootMaster/Put`;
     const data = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -309,7 +309,7 @@ const InfoScreen = props => {
     let temp = profile;
     temp.mTel = tel;
 
-    let url = `http://aso.1966.org.tw:20020/api/FootMaster/Put`;
+    let url = `http://deliver.vielife.com.tw:20027/api/FootMaster/Put`;
     const data = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -379,7 +379,7 @@ const InfoScreen = props => {
         break;
     }
 
-    let url = `http://aso.1966.org.tw:20020/api/FootMaster/Put`;
+    let url = `http://deliver.vielife.com.tw:20027/api/FootMaster/Put`;
     const data = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -409,7 +409,7 @@ const InfoScreen = props => {
   }
 
   async function submitPwd() {
-    let url = `http://aso.1966.org.tw:20020/api/Login/PutForgetPasswordMaster?cAccount=${
+    let url = `http://deliver.vielife.com.tw:20027/api/Login/PutForgetPasswordMaster?cAccount=${
       props?.route?.params?.addAcc
     }&cPassword=${pwd}`;
     const data = await fetch(url, {

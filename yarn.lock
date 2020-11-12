@@ -5525,6 +5525,12 @@ react-native-segmented-control-tab@^3.4.1:
   resolved "https://registry.yarnpkg.com/react-native-segmented-control-tab/-/react-native-segmented-control-tab-3.4.1.tgz#b6e54b8975ce8092315c9b0a1ab58b834d8ccf8e"
   integrity sha512-BNPdlE9Unr0Xabewn8W+FhBMLjssXy9Ey7S7AY0hXlrKrEKFdC9z0yT+eEWd5dLam4T6T4IuGL8b7ZF4uGyWNw==
 
+"react-native-signature-capture@github:detrack/react-native-signature-capture":
+  version "0.4.9"
+  resolved "https://codeload.github.com/detrack/react-native-signature-capture/tar.gz/c9fb3846e3fe4dc97ff119bc3ba499a83e1cbaf5"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-status-bar-height@^2.2.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"

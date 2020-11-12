@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'aso0421' do
-  # Pods for aso0421
+target 'NCKU1111' do
+  # Pods for NCKU1111
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -77,7 +77,7 @@ target 'aso0421' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'aso0421Tests' do
+  target 'NCKU1111Tests' do
     inherit! :complete
     # Pods for testing
   end
@@ -94,10 +94,10 @@ target 'aso0421' do
   end
 end
 
-target 'aso0421-tvOS' do
-  # Pods for aso0421-tvOS
+target 'NCKU1111-tvOS' do
+  # Pods for NCKU1111-tvOS
 
-  target 'aso0421-tvOSTests' do
+  target 'NCKU1111-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

@@ -101,16 +101,16 @@ LoginScreen = props => {
           alignItems: 'flex-start',
           justifyContent: 'center',
         }}>
-        <Avatar
+        {/* <Avatar
           size={120}
 
           overlayContainerStyle={{backgroundColor:'#E5E5E5'}}
 
           imageProps={{resizeMode:'contain'}}
           source={require('../img/a206015.png')}
-        />
+        /> */}
         <Text style={{fontSize: 32, marginTop: 24, marginBottom: 49}}>
-          足健師登入
+          登入
         </Text>
         <Input
           label="登入帳號"

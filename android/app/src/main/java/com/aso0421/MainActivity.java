@@ -1,4 +1,4 @@
-package com.aso0421;
+package com.NCKU1111;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "aso0421";
+    return "NCKU1111";
   }
 }

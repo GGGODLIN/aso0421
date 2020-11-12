@@ -34,6 +34,7 @@ import {
   Icon,
   Rating,
   AirbnbRating,
+  Overlay,
 } from 'react-native-elements';
 
 import {request, PERMISSIONS} from 'react-native-permissions';
@@ -41,6 +42,7 @@ import {useFocusEffect, useRoute} from '@react-navigation/native';
 import SegmentedControl from '@react-native-community/segmented-control';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import RNSignatureExample from './Sign';
 
 function Item({data, navigation, handleDone}) {
   let date = new Date();
@@ -58,7 +60,7 @@ function Item({data, navigation, handleDone}) {
   }
   let even = startDate == nowDate && data?.Status === 1 ? true : false;
   let textColor =
-    data?.Status === 1 ? '#E37F22' : data?.Status === 5 ? '#26B49A' : '#D25959';
+    data?.Status === 1 ? '#E37F22' : data?.Status === 5 ? '#019496' : '#D25959';
   console.log(nowDate, even, startDate);
 
   const _handleDone = () => {
@@ -69,7 +71,7 @@ function Item({data, navigation, handleDone}) {
     reData.IsDeleted = false;
     handleDone(reData);
   };
-
+  console.log('data',data)
   return (
     <View
       style={{
@@ -107,9 +109,15 @@ function Item({data, navigation, handleDone}) {
           {data?.ShopName}
         </Text>
         <Text style={{fontSize: 14}}>{data?.ShopAddr}</Text>
-        <Text style={{fontSize: 14, flex: 1, color: '#964F19'}}>
+       
+        <Text style={{fontSize: 14, color: '#964F19',textDecorationLine:'underline',textAlign:'left'}}
+        onPress={()=>{
+          Linking.openURL(`tel:${data?.ShopTel}`)
+        }}
+        >
           {data?.ShopTel}
         </Text>
+        
         <Rating
           type="custom"
           ratingColor="#FFC531"
@@ -123,10 +131,11 @@ function Item({data, navigation, handleDone}) {
       </View>
 
       <View style={{flexDirection: 'row', margin: 14}}>
-        <View style={{flexDirection: 'column', flex: 2}}>
+        <View style={{flexDirection: 'column', flex: 2,justifyContent:'flex-end'}}>
           <Text style={{fontSize: 12, color: '#999999', lineHeight: 18}}>
-            顧客姓名
+            寄件人姓名
           </Text>
+          <View style={{flexDirection:'row'}}>
           <Text
             style={{
               fontSize: 14,
@@ -136,6 +145,14 @@ function Item({data, navigation, handleDone}) {
             }}>
             {data?.CustomerName}
           </Text>
+          <Text style={{lineHeight: 18,fontSize: 14, color: '#964F19',textDecorationLine:'underline',textAlign:'left'}}
+        onPress={()=>{
+          Linking.openURL(`tel:${data?.CustomerPhone}`)
+        }}
+        >
+            {data?.CustomerPhone}
+          </Text>
+          </View>
           <Text style={{fontSize: 12, color: '#999999', lineHeight: 18}}>
             預約編號
           </Text>
@@ -149,31 +166,53 @@ function Item({data, navigation, handleDone}) {
                   flex: 1,
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginTop:-50
                 }
               : {display: 'none'}
           }>
-          <Button
-            title="異動聯繫"
+            <Button
+            title="運送明細"
             titleStyle={{
               fontSize: 14,
-              color: '#964F19',
               paddingHorizontal: 7,
               padding: 0,
               margin: 0,
             }}
             buttonStyle={{
               alignSelf: 'center',
-              borderColor: '#964F19',
+              backgroundColor: '#C6AA85',
               borderRadius: 50,
               marginVertical: 5,
             }}
-            type="outline"
+            type="solid"
+            onPress={() => {
+              Alert.alert('',data?.UserRemark, [
+                
+                {text: '確定', onPress: () =>  {}},
+              ])
+            }}
+          />
+          <Button
+            title="聯繫客戶"
+            titleStyle={{
+              fontSize: 14,
+              paddingHorizontal: 7,
+              padding: 0,
+              margin: 0,
+            }}
+            buttonStyle={{
+              alignSelf: 'center',
+              backgroundColor: '#AA6A4E',
+              borderRadius: 50,
+              marginVertical: 5,
+            }}
+            type="solid"
             onPress={() => {
               Linking.openURL(`tel:${data?.ShopTel}`);
             }}
           />
           <Button
-            title="任務完成"
+            title="客戶簽收"
             titleStyle={{
               fontSize: 14,
 
@@ -183,7 +222,7 @@ function Item({data, navigation, handleDone}) {
             }}
             buttonStyle={{
               alignSelf: 'center',
-              backgroundColor: '#964F19',
+              backgroundColor: '#921803',
               borderRadius: 50,
               marginVertical: 5,
             }}
@@ -201,6 +240,38 @@ function Item({data, navigation, handleDone}) {
             }}
           />
         </View>
+        {even || <View
+          style={{
+                  flexDirection: 'column',
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop:-50
+                }}>
+            <Button
+            title="運送明細"
+            titleStyle={{
+              fontSize: 14,
+              paddingHorizontal: 7,
+              padding: 0,
+              margin: 0,
+            }}
+            buttonStyle={{
+              alignSelf: 'center',
+              backgroundColor: '#C6AA85',
+              borderRadius: 50,
+              marginVertical: 5,
+            }}
+            type="solid"
+            onPress={() => {
+              Alert.alert('',data?.UserRemark, [
+                
+                {text: '確定', onPress: () =>  {}},
+              ])
+            }}
+          />
+          
+        </View>}
       </View>
     </View>
   );
@@ -226,6 +297,8 @@ const TodayTaskListScreen = props => {
   const [changeDate, setchangeDate] = useState(false);
   const [changeDate2, setchangeDate2] = useState(false);
   const [searchKey, setsearchKey] = useState('');
+  const [signViewOpen, setsignViewOpen] = useState(false);
+  const [cardData, setcardData] = useState(null);
 
   const onChange = (event, selectedDate) => {
     setShow(Platform.OS === 'ios');
@@ -284,7 +357,7 @@ const TodayTaskListScreen = props => {
 
   async function searchData(sDate, eDate, key) {
     const data = await fetch(
-      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
+      `http://deliver.vielife.com.tw:20027/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -311,7 +384,7 @@ const TodayTaskListScreen = props => {
 
   async function searchData_His(input, sDate, eDate, key) {
     let token = input;
-    let url = `http://aso.1966.org.tw:20020/api/Orders/GetList?_date=${sDate}&_eDate=${eDate}&key=${key}&orderBy=%20ReservationDate%20desc%20`;
+    let url = `http://deliver.vielife.com.tw:20027/api/Orders/GetList?_date=${sDate}&_eDate=${eDate}&key=${key}&orderBy=%20ReservationDate%20desc%20`;
     console.log('searchData_His request to', url);
     const data = await fetch(url, {
       method: 'GET',
@@ -336,7 +409,7 @@ const TodayTaskListScreen = props => {
 
   async function getToken() {
     const data = await fetch(
-      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
+      `http://deliver.vielife.com.tw:20027/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -368,7 +441,7 @@ const TodayTaskListScreen = props => {
     let nowDate = `${date.getFullYear()}-${date.getMonth() +
       1}-${date.getDate()}`;
     let token = input;
-    let url = `http://aso.1966.org.tw:20020/api/Orders/GetList?_date=${nowDate}&_eDate=${nowDate}`;
+    let url = `http://deliver.vielife.com.tw:20027/api/Orders/GetList?_date=${nowDate}&_eDate=${nowDate}`;
     console.log('fetchData_test request to ', url);
     const data = await fetch(url, {
       method: 'GET',
@@ -411,7 +484,7 @@ const TodayTaskListScreen = props => {
   async function fetchData_His(input) {
     let token = input;
     let url =
-      'http://aso.1966.org.tw:20020/api/Orders/GetList?_date=&orderBy=%20ReservationDate%20desc%20';
+      'http://deliver.vielife.com.tw:20027/api/Orders/GetList?_date=&orderBy=%20ReservationDate%20desc%20';
     const data = await fetch(url, {
       method: 'GET',
       headers: {
@@ -439,14 +512,16 @@ const TodayTaskListScreen = props => {
   };
 
   const handleDone = e => {
+    setsignViewOpen(true)
     console.log(e);
-    ordersPut(e);
+    //ordersPut(e);
+    setcardData(e)
   };
 
   const ordersPut = async input => {
     setLoading(true);
     const data = await fetch(
-      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
+      `http://deliver.vielife.com.tw:20027/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -459,7 +534,7 @@ const TodayTaskListScreen = props => {
         console.log('ordersPut TOKEN AJAX TASK', res);
 
         let token = res?.token;
-        let url2 = 'http://aso.1966.org.tw:20020/api/Orders/Put';
+        let url2 = 'http://deliver.vielife.com.tw:20027/api/Orders/Put';
         console.log('ordersPut request to', url2);
         const data2 = await fetch(url2, {
           method: 'PUT',
@@ -537,6 +612,11 @@ const TodayTaskListScreen = props => {
     });
   }
 
+  const handleSavePic = (data) => {
+    setsignViewOpen(false)
+    ordersPut(cardData)
+  }
+
   useEffect(() => {
     fetchData().then(() => setLoading(false));
     return () => {
@@ -567,6 +647,21 @@ const TodayTaskListScreen = props => {
         style={{
           flex: 1,
         }}>
+          <Overlay
+          isVisible={signViewOpen}
+          windowBackgroundColor="rgba(0, 0, 0, .5)"
+          //overlayBackgroundColor="rgba(0, 0, 0, .5)"
+          width="90%"
+          height="80%">
+          <RNSignatureExample
+            handleSavePic={handleSavePic}
+            handleCancel = {()=>{
+              setsignViewOpen(false)
+              _onRefresh()
+            }}
+            name={'123'}
+          />
+        </Overlay>
         <SegmentedControl
           style={{
             marginTop: 20,

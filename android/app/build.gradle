@@ -130,7 +130,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.aso0421"
+        applicationId "com.NCKU1111"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

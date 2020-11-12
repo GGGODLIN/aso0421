@@ -48,7 +48,7 @@ const App: () => React$Node = () => {
 
   async function getToken(acc,pwd) {
     const data = await fetch(
-      `http://aso.1966.org.tw:20020/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
+      `http://deliver.vielife.com.tw:20027/api/Login/JWTTokenMaster?name=${acc}&pass=${pwd}`,
       {
         method: 'GET',
         headers: {
@@ -76,7 +76,7 @@ const App: () => React$Node = () => {
 
   async function fetchData_test(input) {
     let token = input;
-    const data = await fetch('http://aso.1966.org.tw:20020/api/Orders/Get', {
+    const data = await fetch('http://deliver.vielife.com.tw:20027/api/Orders/Get', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -100,7 +100,7 @@ const App: () => React$Node = () => {
 
   async function fetchLogin(acc,pwd) {
    
-    let url = `http://aso.1966.org.tw:20020/api/Login/MasterLogin?acc=${acc}&pwd=${pwd}`;
+    let url = `http://deliver.vielife.com.tw:20027/api/Login/MasterLogin?acc=${acc}&pwd=${pwd}`;
     const data = await fetch(url, {
       method: 'POST',
       headers: {

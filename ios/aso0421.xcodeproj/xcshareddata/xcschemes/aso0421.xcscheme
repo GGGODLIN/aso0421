@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "aso0421.app"
-               BlueprintName = "aso0421"
-               ReferencedContainer = "container:aso0421.xcodeproj">
+               BuildableName = "NCKU1111.app"
+               BlueprintName = "NCKU1111"
+               ReferencedContainer = "container:NCKU1111.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "aso0421Tests.xctest"
-               BlueprintName = "aso0421Tests"
-               ReferencedContainer = "container:aso0421.xcodeproj">
+               BuildableName = "NCKU1111Tests.xctest"
+               BlueprintName = "NCKU1111Tests"
+               ReferencedContainer = "container:NCKU1111.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "aso0421.app"
-            BlueprintName = "aso0421"
-            ReferencedContainer = "container:aso0421.xcodeproj">
+            BuildableName = "NCKU1111.app"
+            BlueprintName = "NCKU1111"
+            ReferencedContainer = "container:NCKU1111.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "aso0421.app"
-            BlueprintName = "aso0421"
-            ReferencedContainer = "container:aso0421.xcodeproj">
+            BuildableName = "NCKU1111.app"
+            BlueprintName = "NCKU1111"
+            ReferencedContainer = "container:NCKU1111.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

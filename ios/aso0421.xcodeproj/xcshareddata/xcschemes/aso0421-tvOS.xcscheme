@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "aso0421-tvOS.app"
-               BlueprintName = "aso0421-tvOS"
-               ReferencedContainer = "container:aso0421.xcodeproj">
+               BuildableName = "NCKU1111-tvOS.app"
+               BlueprintName = "NCKU1111-tvOS"
+               ReferencedContainer = "container:NCKU1111.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "aso0421-tvOSTests.xctest"
-               BlueprintName = "aso0421-tvOSTests"
-               ReferencedContainer = "container:aso0421.xcodeproj">
+               BuildableName = "NCKU1111-tvOSTests.xctest"
+               BlueprintName = "NCKU1111-tvOSTests"
+               ReferencedContainer = "container:NCKU1111.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "aso0421-tvOS.app"
-            BlueprintName = "aso0421-tvOS"
-            ReferencedContainer = "container:aso0421.xcodeproj">
+            BuildableName = "NCKU1111-tvOS.app"
+            BlueprintName = "NCKU1111-tvOS"
+            ReferencedContainer = "container:NCKU1111.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "aso0421-tvOS.app"
-            BlueprintName = "aso0421-tvOS"
-            ReferencedContainer = "container:aso0421.xcodeproj">
+            BuildableName = "NCKU1111-tvOS.app"
+            BlueprintName = "NCKU1111-tvOS"
+            ReferencedContainer = "container:NCKU1111.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
